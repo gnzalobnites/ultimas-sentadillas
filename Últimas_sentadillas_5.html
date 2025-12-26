@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Últimas sentadillas</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .titulo {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 2.5em;
+            color: #333;
+        }
+
+        .fecha-container {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.5em;
+            color: #555;
+            width: 80%;
+        }
+
+        .tabla-container {
+            margin-top: 20px;
+            width: 80%;
+            max-height: 25vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        td {
+            padding: 10px;
+            text-align: center;
+            font-size: 1.5em;
+            color: #444;
+        }
+
+        .boton-eliminar {
+            background-color: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+
+        .boton-eliminar:hover {
+            background-color: #ff5252;
+        }
+
+        .contenido-celda {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .botones-container {
+            position: fixed;
+            bottom: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+        }
+
+        .boton {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: none;
+            color: white;
+            font-size: 1em;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .boton-registrar {
+            background-color: #4CAF50;
+        }
+
+        .boton-borrar {
+            background-color: #f44336;
+        }
+
+        .boton-registrar:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+        }
+
+        .boton-borrar:hover {
+            background-color: #d32f2f;
+            transform: scale(1.05);
+        }
+
+        .boton:active {
+            transform: scale(0.95);
+        }
+
+        .cronometro-container {
+            margin-top: 20px;
+            font-size: 1.8em;
+            color: #333;
+            text-align: center;
+            width: 80%;
+            padding: 15px;
+            background-color: #e8f5e9;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .flecha-scroll {
+            position: absolute;
+            font-size: 1.5em;
+            color: #666;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .flecha-arriba {
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .tabla-container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .tabla-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .tabla-container::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 4px;
+        }
+
+        .tabla-container::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+    </style>
+</head>
+<body>
+    <div class="titulo">
+        Últimas sentadillas
+    </div>
+    
+    <div id="fechaContainer" class="fecha-container"></div>
+    
+    <div class="tabla-container" id="tablaContainer">
+        <div class="flecha-scroll flecha-arriba"></div>
+        <table id="tablaSeries">
+            <tbody>
+                <!-- Las filas se agregarán aquí dinámicamente -->
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="cronometro-container">
+        <div id="cronometro">00:00:00</div>
+        <div style="font-size: 1em; margin-top: 5px; color: #666;">Tiempo de descanso</div>
+    </div>
+    
+    <div class="botones-container">
+        <button class="boton boton-borrar" onclick="borrarDatos()">
+            Borrar
+        </button>
+        <button class="boton boton-registrar" onclick="registrarSerie()">
+            Registrar
+        </button>
+    </div>
+
+    <script>
+        let numeroSerie = 0;
+        let intervaloCronometro = null;
+        let ultimoTimestamp = null;
+
+        function obtenerFechaFormateada(fecha) {
+            const dias = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
+            const meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+            
+            const diaSemana = dias[fecha.getDay()];
+            const dia = fecha.getDate();
+            const mes = meses[fecha.getMonth()];
+            const año = fecha.getFullYear();
+            
+            return `${diaSemana} ${dia} de ${mes} de ${año}`;
+        }
+
+        function formatearTiempo(segundos) {
+            const horas = Math.floor(segundos / 3600);
+            const minutos = Math.floor((segundos % 3600) / 60);
+            const segs = segundos % 60;
+            
+            return `${horas.toString().padStart(2, '0')}:${minutos.toString().padStart(2, '0')}:${segs.toString().padStart(2, '0')}`;
+        }
+
+        function iniciarCronometro() {
+            if (intervaloCronometro) {
+                clearInterval(intervaloCronometro);
+            }
+            
+            if (ultimoTimestamp) {
+                intervaloCronometro = setInterval(() => {
+                    const ahora = new Date().getTime();
+                    const segundosTranscurridos = Math.floor((ahora - ultimoTimestamp) / 1000);
+                    document.getElementById('cronometro').textContent = formatearTiempo(segundosTranscurridos);
+                }, 1000);
+            }
+        }
+
+        function actualizarNumerosSeries() {
+            const filas = document.querySelectorAll('#tablaSeries tbody tr');
+            let seriesActualizadas = [];
+            let nuevoNumero = 1;
+            
+            filas.forEach(fila => {
+                // Actualizar el texto de la serie
+                const celdaSerie = fila.cells[0];
+                const contenidoDiv = celdaSerie.querySelector('.contenido-celda');
+                const botonEliminar = contenidoDiv.querySelector('.boton-eliminar');
+                const numeroOriginal = parseInt(botonEliminar.dataset.numeroOriginal);
+                
+                // Actualizar el texto
+                contenidoDiv.firstChild.textContent = `Serie ${nuevoNumero}`;
+                
+                // Actualizar el número en el botón para referencia
+                botonEliminar.dataset.numeroActual = nuevoNumero;
+                
+                // Actualizar la serie en la lista
+                const serieGuardada = JSON.parse(localStorage.getItem('seriesSentadillas') || '[]')
+                    .find(s => s.numero === numeroOriginal);
+                if (serieGuardada) {
+                    seriesActualizadas.push({
+                        numero: nuevoNumero,
+                        hora: serieGuardada.hora,
+                        timestamp: serieGuardada.timestamp
+                    });
+                }
+                
+                nuevoNumero++;
+            });
+            
+            // Guardar las series actualizadas
+            localStorage.setItem('seriesSentadillas', JSON.stringify(seriesActualizadas));
+            numeroSerie = seriesActualizadas.length > 0 ? seriesActualizadas.length : 0;
+            
+            // Actualizar la fecha si hay series
+            if (seriesActualizadas.length > 0) {
+                const primeraSerie = seriesActualizadas.reduce((min, serie) => {
+                    return serie.timestamp < min.timestamp ? serie : min;
+                }, seriesActualizadas[0]);
+                document.getElementById('fechaContainer').textContent = obtenerFechaFormateada(new Date(primeraSerie.timestamp));
+                
+                // Actualizar el último timestamp para el cronómetro
+                const ultimaSerie = seriesActualizadas.reduce((max, serie) => {
+                    return serie.timestamp > max.timestamp ? serie : max;
+                }, seriesActualizadas[0]);
+                ultimoTimestamp = ultimaSerie.timestamp;
+                iniciarCronometro();
+            } else {
+                document.getElementById('fechaContainer').textContent = '';
+                ultimoTimestamp = null;
+                document.getElementById('cronometro').textContent = '00:00:00';
+                if (intervaloCronometro) {
+                    clearInterval(intervaloCronometro);
+                    intervaloCronometro = null;
+                }
+            }
+        }
+
+        function registrarSerie() {
+            const ahora = new Date();
+            const horaFormateada = ahora.toLocaleTimeString('es-ES', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            
+            numeroSerie++;
+            
+            const tabla = document.getElementById('tablaSeries').getElementsByTagName('tbody')[0];
+            const nuevaFila = tabla.insertRow();
+            
+            const celdaSerie = nuevaFila.insertCell(0);
+            const celdaHora = nuevaFila.insertCell(1);
+            
+            // Crear contenedor para las celdas con botón de eliminar
+            const contenidoSerie = document.createElement('div');
+            contenidoSerie.className = 'contenido-celda';
+            contenidoSerie.innerHTML = `Serie ${numeroSerie}`;
+            
+            const botonEliminar = document.createElement('button');
+            botonEliminar.className = 'boton-eliminar';
+            botonEliminar.textContent = '×';
+            botonEliminar.dataset.numeroOriginal = numeroSerie;
+            botonEliminar.dataset.numeroActual = numeroSerie;
+            botonEliminar.onclick = function() {
+                if (confirm('¿Estás seguro de que quieres eliminar esta serie?')) {
+                    // Eliminar la fila
+                    nuevaFila.remove();
+                    
+                    // Recalcular todos los números de serie
+                    actualizarNumerosSeries();
+                }
+            };
+            
+            contenidoSerie.appendChild(botonEliminar);
+            celdaSerie.appendChild(contenidoSerie);
+            
+            celdaHora.textContent = horaFormateada;
+            
+            // Guardar la serie en localStorage
+            const series = JSON.parse(localStorage.getItem('seriesSentadillas') || '[]');
+            series.push({
+                numero: numeroSerie,
+                hora: horaFormateada,
+                timestamp: ahora.getTime()
+            });
+            localStorage.setItem('seriesSentadillas', JSON.stringify(series));
+            
+            // Actualizar la fecha si es la primera serie del día
+            if (series.length === 1) {
+                document.getElementById('fechaContainer').textContent = obtenerFechaFormateada(ahora);
+            }
+            
+            // Actualizar el último timestamp y reiniciar el cronómetro
+            ultimoTimestamp = ahora.getTime();
+            iniciarCronometro();
+        }
+
+        function borrarDatos() {
+            // Mostrar ventana de confirmación
+            if (confirm('¿Estás seguro de que quieres borrar todas las series registradas? Esta acción no se puede deshacer.')) {
+                // Limpiar la tabla
+                const tabla = document.getElementById('tablaSeries').getElementsByTagName('tbody')[0];
+                tabla.innerHTML = '';
+                
+                // Reiniciar el contador
+                numeroSerie = 0;
+                
+                // Limpiar la fecha
+                document.getElementById('fechaContainer').textContent = '';
+                
+                // Limpiar el localStorage
+                localStorage.removeItem('seriesSentadillas');
+                
+                // Reiniciar el cronómetro
+                ultimoTimestamp = null;
+                document.getElementById('cronometro').textContent = '00:00:00';
+                if (intervaloCronometro) {
+                    clearInterval(intervaloCronometro);
+                    intervaloCronometro = null;
+                }
+            }
+        }
+
+        // Al cargar la página, mostrar las series guardadas si existen
+        window.onload = function() {
+            const seriesGuardadas = JSON.parse(localStorage.getItem('seriesSentadillas') || '[]');
+            if (seriesGuardadas.length > 0) {
+                const tabla = document.getElementById('tablaSeries').getElementsByTagName('tbody')[0];
+                
+                // Ordenar las series por timestamp para asegurar el orden correcto
+                seriesGuardadas.sort((a, b) => a.timestamp - b.timestamp);
+                
+                // Encontrar la primera serie para mostrar la fecha
+                const primeraSerie = seriesGuardadas[0];
+                document.getElementById('fechaContainer').textContent = obtenerFechaFormateada(new Date(primeraSerie.timestamp));
+                
+                seriesGuardadas.forEach(function(serie, index) {
+                    const nuevoNumero = index + 1;
+                    const nuevaFila = tabla.insertRow();
+                    
+                    const celdaSerie = nuevaFila.insertCell(0);
+                    const celdaHora = nuevaFila.insertCell(1);
+                    
+                    // Crear contenedor para la celda de serie con botón de eliminar
+                    const contenidoSerie = document.createElement('div');
+                    contenidoSerie.className = 'contenido-celda';
+                    contenidoSerie.innerHTML = `Serie ${nuevoNumero}`;
+                    
+                    const botonEliminar = document.createElement('button');
+                    botonEliminar.className = 'boton-eliminar';
+                    botonEliminar.textContent = '×';
+                    botonEliminar.dataset.numeroOriginal = serie.numero;
+                    botonEliminar.dataset.numeroActual = nuevoNumero;
+                    botonEliminar.onclick = function() {
+                        if (confirm('¿Estás seguro de que quieres eliminar esta serie?')) {
+                            // Eliminar la fila
+                            nuevaFila.remove();
+                            
+                            // Recalcular todos los números de serie
+                            actualizarNumerosSeries();
+                        }
+                    };
+                    
+                    contenidoSerie.appendChild(botonEliminar);
+                    celdaSerie.appendChild(contenidoSerie);
+                    
+                    celdaHora.textContent = serie.hora;
+                    
+                    // Actualizar el número de serie al mayor encontrado
+                    if (nuevoNumero > numeroSerie) {
+                        numeroSerie = nuevoNumero;
+                    }
+                });
+                
+                // Establecer el último timestamp para el cronómetro
+                const ultimaSerie = seriesGuardadas[seriesGuardadas.length - 1];
+                ultimoTimestamp = ultimaSerie.timestamp;
+                iniciarCronometro();
+            }
+            
+            // Manejar la visibilidad de las flechas de scroll
+            const tablaContainer = document.getElementById('tablaContainer');
+            
+            function actualizarFlechasScroll() {
+                const flechaArriba = document.querySelector('.flecha-arriba');
+                
+                const scrollTop = tablaContainer.scrollTop;
+                
+                flechaArriba.style.opacity = scrollTop > 0 ? '1' : '0';
+            }
+            
+            tablaContainer.addEventListener('scroll', actualizarFlechasScroll);
+            // Verificar inicialmente
+            setTimeout(actualizarFlechasScroll, 100);
+        };
+    </script>
+</body>
+</html>
