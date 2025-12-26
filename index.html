@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Últimas sentadillas</title>
+    <title>Ãšltimas sentadillas</title>
     <style>
         body {
             margin: 0;
@@ -166,7 +166,7 @@
 </head>
 <body>
     <div class="titulo">
-        Últimas sentadillas
+        Ãšltimas sentadillas
     </div>
     
     <div id="fechaContainer" class="fecha-container"></div>
@@ -175,7 +175,7 @@
         <div class="flecha-scroll flecha-arriba"></div>
         <table id="tablaSeries">
             <tbody>
-                <!-- Las filas se agregarán aquí dinámicamente -->
+                <!-- Las filas se agregarÃ¡n aquÃ­ dinÃ¡micamente -->
             </tbody>
         </table>
     </div>
@@ -200,15 +200,15 @@
         let ultimoTimestamp = null;
 
         function obtenerFechaFormateada(fecha) {
-            const dias = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
+            const dias = ['domingo', 'lunes', 'martes', 'miÃ©rcoles', 'jueves', 'viernes', 'sÃ¡bado'];
             const meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
             
             const diaSemana = dias[fecha.getDay()];
             const dia = fecha.getDate();
             const mes = meses[fecha.getMonth()];
-            const año = fecha.getFullYear();
+            const aÃ±o = fecha.getFullYear();
             
-            return `${diaSemana} ${dia} de ${mes} de ${año}`;
+            return `${diaSemana} ${dia} de ${mes} de ${aÃ±o}`;
         }
 
         function formatearTiempo(segundos) {
@@ -248,7 +248,7 @@
                 // Actualizar el texto
                 contenidoDiv.firstChild.textContent = `Serie ${nuevoNumero}`;
                 
-                // Actualizar el número en el botón para referencia
+                // Actualizar el nÃºmero en el botÃ³n para referencia
                 botonEliminar.dataset.numeroActual = nuevoNumero;
                 
                 // Actualizar la serie en la lista
@@ -276,7 +276,7 @@
                 }, seriesActualizadas[0]);
                 document.getElementById('fechaContainer').textContent = obtenerFechaFormateada(new Date(primeraSerie.timestamp));
                 
-                // Actualizar el último timestamp para el cronómetro
+                // Actualizar el Ãºltimo timestamp para el cronÃ³metro
                 const ultimaSerie = seriesActualizadas.reduce((max, serie) => {
                     return serie.timestamp > max.timestamp ? serie : max;
                 }, seriesActualizadas[0]);
@@ -309,22 +309,22 @@
             const celdaSerie = nuevaFila.insertCell(0);
             const celdaHora = nuevaFila.insertCell(1);
             
-            // Crear contenedor para las celdas con botón de eliminar
+            // Crear contenedor para las celdas con botÃ³n de eliminar
             const contenidoSerie = document.createElement('div');
             contenidoSerie.className = 'contenido-celda';
             contenidoSerie.innerHTML = `Serie ${numeroSerie}`;
             
             const botonEliminar = document.createElement('button');
             botonEliminar.className = 'boton-eliminar';
-            botonEliminar.textContent = '×';
+            botonEliminar.textContent = 'Ã—';
             botonEliminar.dataset.numeroOriginal = numeroSerie;
             botonEliminar.dataset.numeroActual = numeroSerie;
             botonEliminar.onclick = function() {
-                if (confirm('¿Estás seguro de que quieres eliminar esta serie?')) {
+                if (confirm('Â¿EstÃ¡s seguro de que quieres eliminar esta serie?')) {
                     // Eliminar la fila
                     nuevaFila.remove();
                     
-                    // Recalcular todos los números de serie
+                    // Recalcular todos los nÃºmeros de serie
                     actualizarNumerosSeries();
                 }
             };
@@ -343,19 +343,19 @@
             });
             localStorage.setItem('seriesSentadillas', JSON.stringify(series));
             
-            // Actualizar la fecha si es la primera serie del día
+            // Actualizar la fecha si es la primera serie del dÃ­a
             if (series.length === 1) {
                 document.getElementById('fechaContainer').textContent = obtenerFechaFormateada(ahora);
             }
             
-            // Actualizar el último timestamp y reiniciar el cronómetro
+            // Actualizar el Ãºltimo timestamp y reiniciar el cronÃ³metro
             ultimoTimestamp = ahora.getTime();
             iniciarCronometro();
         }
 
         function borrarDatos() {
-            // Mostrar ventana de confirmación
-            if (confirm('¿Estás seguro de que quieres borrar todas las series registradas? Esta acción no se puede deshacer.')) {
+            // Mostrar ventana de confirmaciÃ³n
+            if (confirm('Â¿EstÃ¡s seguro de que quieres borrar todas las series registradas? Esta acciÃ³n no se puede deshacer.')) {
                 // Limpiar la tabla
                 const tabla = document.getElementById('tablaSeries').getElementsByTagName('tbody')[0];
                 tabla.innerHTML = '';
@@ -369,7 +369,7 @@
                 // Limpiar el localStorage
                 localStorage.removeItem('seriesSentadillas');
                 
-                // Reiniciar el cronómetro
+                // Reiniciar el cronÃ³metro
                 ultimoTimestamp = null;
                 document.getElementById('cronometro').textContent = '00:00:00';
                 if (intervaloCronometro) {
@@ -379,7 +379,7 @@
             }
         }
 
-        // Al cargar la página, mostrar las series guardadas si existen
+        // Al cargar la pÃ¡gina, mostrar las series guardadas si existen
         window.onload = function() {
             const seriesGuardadas = JSON.parse(localStorage.getItem('seriesSentadillas') || '[]');
             if (seriesGuardadas.length > 0) {
@@ -399,22 +399,22 @@
                     const celdaSerie = nuevaFila.insertCell(0);
                     const celdaHora = nuevaFila.insertCell(1);
                     
-                    // Crear contenedor para la celda de serie con botón de eliminar
+                    // Crear contenedor para la celda de serie con botÃ³n de eliminar
                     const contenidoSerie = document.createElement('div');
                     contenidoSerie.className = 'contenido-celda';
                     contenidoSerie.innerHTML = `Serie ${nuevoNumero}`;
                     
                     const botonEliminar = document.createElement('button');
                     botonEliminar.className = 'boton-eliminar';
-                    botonEliminar.textContent = '×';
+                    botonEliminar.textContent = 'Ã—';
                     botonEliminar.dataset.numeroOriginal = serie.numero;
                     botonEliminar.dataset.numeroActual = nuevoNumero;
                     botonEliminar.onclick = function() {
-                        if (confirm('¿Estás seguro de que quieres eliminar esta serie?')) {
+                        if (confirm('Â¿EstÃ¡s seguro de que quieres eliminar esta serie?')) {
                             // Eliminar la fila
                             nuevaFila.remove();
                             
-                            // Recalcular todos los números de serie
+                            // Recalcular todos los nÃºmeros de serie
                             actualizarNumerosSeries();
                         }
                     };
@@ -424,13 +424,13 @@
                     
                     celdaHora.textContent = serie.hora;
                     
-                    // Actualizar el número de serie al mayor encontrado
+                    // Actualizar el nÃºmero de serie al mayor encontrado
                     if (nuevoNumero > numeroSerie) {
                         numeroSerie = nuevoNumero;
                     }
                 });
                 
-                // Establecer el último timestamp para el cronómetro
+                // Establecer el Ãºltimo timestamp para el cronÃ³metro
                 const ultimaSerie = seriesGuardadas[seriesGuardadas.length - 1];
                 ultimoTimestamp = ultimaSerie.timestamp;
                 iniciarCronometro();
