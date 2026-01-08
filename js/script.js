@@ -12,15 +12,59 @@ function actualizarDisposicionElementos() {
     if (hayRegistros) {
         cronometro.classList.add('fijo-arriba-botones');
         tablaContainer.classList.add('con-registros');
+        
+        // CÁLCULO EXACTO DE ALTURA DISPONIBLE PARA TABLA
+        const alturaVentana = window.innerHeight;
+        
+        // Altura de elementos FIJOS (en píxeles)
+        const alturaTitulo = 110;       // Título + fecha + márgenes
+        const alturaCronometro = 70;    // Cronómetro
+        const alturaBotones = 80;       // Botones circulares
+        const alturaFooter = 70;        // Footer
+        const separacionesFijas = 140;  // Suma de todos los espacios
+        
+        // Cálculo exacto
+        const espacioFijo = alturaTitulo + alturaCronometro + alturaBotones + 
+                           alturaFooter + separacionesFijas;
+        
+        // 20px de margen entre tabla y cronómetro
+        const margenTablaCronometro = 20;
+        
+        const alturaDisponible = alturaVentana - espacioFijo - margenTablaCronometro;
+        
+        // Limitar altura máxima (55% de la pantalla) y mínima (100px)
+        const alturaCalculada = Math.max(100, Math.min(alturaDisponible, alturaVentana * 0.55));
+        
+        console.log('Cálculo altura tabla:', {
+            alturaVentana,
+            espacioFijo,
+            margenTablaCronometro,
+            alturaDisponible,
+            alturaCalculada
+        });
+        
+        tablaContainer.style.maxHeight = alturaCalculada + 'px';
+        
+        // Asegurar que la tabla NO llegue al cronómetro
+        const tablaRect = tablaContainer.getBoundingClientRect();
+        const cronometroRect = cronometro.getBoundingClientRect();
+        
+        if (tablaRect.bottom + 20 > cronometroRect.top) {
+            // Ajuste adicional si se está superponiendo
+            const ajusteNecesario = (tablaRect.bottom + 20) - cronometroRect.top;
+            tablaContainer.style.maxHeight = (alturaCalculada - ajusteNecesario) + 'px';
+        }
     } else {
         cronometro.classList.remove('fijo-arriba-botones');
         tablaContainer.classList.remove('con-registros');
+        tablaContainer.style.maxHeight = '0';
     }
 }
 
-// El resto del archivo permanece IGUAL
-
 window.addEventListener('resize', actualizarDisposicionElementos);
+
+// El resto del código JavaScript permanece IGUAL
+// ... (todas las demás funciones sin cambios)
 
 function obtenerFechaFormateada(fecha) {
     const dias = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
