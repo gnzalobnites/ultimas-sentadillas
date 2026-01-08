@@ -9,7 +9,7 @@ body {
     align-items: center;
     justify-content: flex-start;
     overflow: hidden;
-    padding-bottom: 110px; /* 80px footer + 40px espacio */
+    padding-bottom: 100px; /* CAMBIADO: 80px footer + 20px espacio */
 }
 
 .titulo {
@@ -87,10 +87,10 @@ td {
     justify-content: center;
 }
 
-/* BOTONES - 40px ARRIBA DEL FOOTER */
+/* BOTONES - 20px ARRIBA DEL FOOTER */
 .botones-container {
     position: fixed;
-    bottom: 110px; /* 80px footer + 40px espacio */
+    bottom: 100px; /* CAMBIADO: 80px footer + 20px espacio */
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -150,10 +150,10 @@ td {
     flex-shrink: 0;
 }
 
-/* CRONÓMETRO - 40px ARRIBA DE LOS BOTONES */
+/* CRONÓMETRO - 20px ARRIBA DE LOS BOTONES */
 .cronometro-container.fijo-arriba-botones {
     position: fixed;
-    bottom: 230px; /* 120px botones + 80px altura botón + 40px espacio */
+    bottom: 200px; /* CAMBIADO: 100px botones + 80px altura + 20px espacio */
     left: 50%;
     transform: translateX(-50%);
     width: 80%;
@@ -194,7 +194,7 @@ td {
     background: #a8a8a8;
 }
 
-/* FOOTER - ALTURA REDUCIDA */
+/* FOOTER - COMPACTO */
 footer {
     position: fixed;
     bottom: 0;
@@ -202,23 +202,22 @@ footer {
     text-align: center;
     font-size: 0.85em;
     color: #777;
-    padding: 10px 20px; /* REDUCIDO padding vertical */
+    padding: 8px 20px; /* Reducido padding vertical */
     box-sizing: border-box;
     z-index: 99;
     background-color: #f0f0f0;
     border-top: 1px solid #ddd;
     height: auto;
-    min-height: 80px; /* ALTURA FOOTER */
+    min-height: 80px; /* Altura del footer */
     display: flex;
     flex-direction: column;
     justify-content: center;
-    Sin: center;
-    gap: 2px; /* Sin espacio entre elementos hijos */
+    line-height: 1.1; /* Menos espacio entre líneas */
 }
 
 footer br {
-    margin: 0;
-    height: 0; /* Control exacto del espacio */
+    margin: 0; /* Sin margen extra entre líneas */
+    line-height: 1;
 }
 
 footer a {
@@ -232,9 +231,10 @@ footer a:last-child {
     font-weight: bold;
 }
 
+/* Ajustes responsivos */
 @media (max-width: 768px) {
     body {
-        padding-bottom: 130px;
+        padding-bottom: 90px;
     }
     
     .cronometro-container,
@@ -245,7 +245,7 @@ footer a:last-child {
     }
     
     .cronometro-container.fijo-arriba-botones {
-        bottom: 240px; /* Ajustado proporcionalmente */
+        bottom: 180px; /* Ajustado proporcionalmente */
     }
     
     .tabla-container,
@@ -254,30 +254,30 @@ footer a:last-child {
     }
     
     .botones-container {
-        bottom: 130px; /* Ajustado proporcionalmente */
+        bottom: 90px; /* Ajustado proporcionalmente */
     }
     
     footer {
-        padding: 8px 15px;
+        padding: 6px 15px;
         min-height: 75px;
         font-size: 0.8em;
-        line-height: 1.1;
+        line-height: 1;
     }
 }
 
 @media (max-height: 700px) {
     body {
-        padding-bottom: 120px;
+        padding-bottom: 80px;
     }
     
     .cronometro-container.fijo-arriba-botones {
-        bottom: 220px;
+        bottom: 170px;
         padding: 10px;
         font-size: 1.6em;
     }
     
     .botones-container {
-        bottom: 120px;
+        bottom: 80px;
     }
     
     .tabla-container.con-registros {
@@ -285,7 +285,7 @@ footer a:last-child {
     }
     
     footer {
-        padding: 6px 12px;
+        padding: 5px 12px;
         min-height: 70px;
         line-height: 1;
     }
@@ -297,10 +297,10 @@ footer a:last-child {
     }
     
     .cronometro-container.fijo-arriba-botones {
-        bottom: 250px;
+        bottom: 210px;
     }
     
     .botones-container {
-        bottom: 130px;
+        bottom: 110px;
     }
 }
