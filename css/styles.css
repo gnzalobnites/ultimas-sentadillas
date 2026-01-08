@@ -8,8 +8,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    overflow: hidden;
-    padding-bottom: 140px; /* 80px footer + 60px botones-footer */
+    padding-bottom: 140px; /* espacio para botones + footer */
 }
 
 .titulo {
@@ -17,7 +16,6 @@ body {
     margin-top: 30px;
     font-size: 2.5em;
     color: #333;
-    flex-shrink: 0;
 }
 
 .fecha-container {
@@ -26,7 +24,6 @@ body {
     font-size: 1.5em;
     color: #555;
     width: 80%;
-    flex-shrink: 0;
 }
 
 .contenedor-principal {
@@ -34,25 +31,20 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    flex: 1;
-    min-height: 0;
+    margin-top: 10px;
 }
 
 .tabla-container {
-    margin-top: 10px;
     width: 80%;
     max-height: 0;
-    overflow-y: auto;
-    position: relative;
-    flex-shrink: 0;
+    overflow-y: hidden;
+    transition: max-height 0.3s ease;
 }
 
-/* TABLA CON REGISTROS - ALTURA CONTROLADA */
 .tabla-container.con-registros {
-    max-height: calc(100vh - 480px) !important; /* Altura dinámica calculada */
-    flex: 1;
-    min-height: 100px;
-    margin-bottom: 20px; /* Espacio mínimo abajo */
+    max-height: 35vh; /* Límite máximo de altura */
+    overflow-y: auto;
+    margin-bottom: 20px;
 }
 
 table {
@@ -65,6 +57,12 @@ td {
     text-align: center;
     font-size: 1.5em;
     color: #444;
+}
+
+.contenido-celda {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .boton-eliminar {
@@ -82,22 +80,14 @@ td {
     background-color: #ff5252;
 }
 
-.contenido-celda {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* BOTONES - 60px ARRIBA DEL FOOTER */
 .botones-container {
     position: fixed;
-    bottom: 140px; /* 80px footer + 60px espacio */
+    bottom: 140px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
     gap: 20px;
     z-index: 100;
-    flex-shrink: 0;
 }
 
 .boton {
@@ -115,27 +105,12 @@ td {
     text-align: center;
 }
 
-.boton-registrar {
-    background-color: #4CAF50;
-}
+.boton-registrar { background-color: #4CAF50; }
+.boton-borrar { background-color: #f44336; }
 
-.boton-borrar {
-    background-color: #f44336;
-}
-
-.boton-registrar:hover {
-    background-color: #45a049;
-    transform: scale(1.05);
-}
-
-.boton-borrar:hover {
-    background-color: #d32f2f;
-    transform: scale(1.05);
-}
-
-.boton:active {
-    transform: scale(0.95);
-}
+.boton-registrar:hover { background-color: #45a049; transform: scale(1.05); }
+.boton-borrar:hover { background-color: #d32f2f; transform: scale(1.05); }
+.boton:active { transform: scale(0.95); }
 
 .cronometro-container {
     margin-top: 10px;
@@ -147,55 +122,25 @@ td {
     background-color: #e8f5e9;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    transition: all 0.3s ease;
-    flex-shrink: 0;
 }
 
-/* CRONÓMETRO - 40px ARRIBA DE LOS BOTONES */
-.cronometro-container.fijo-arriba-botones {
-    position: fixed;
-    bottom: 260px; /* 140px botones + 80px altura botón + 40px espacio */
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80%;
-    margin-top: 0;
-    z-index: 100;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
-
-.flecha-scroll {
-    position: absolute;
-    font-size: 1.5em;
-    color: #666;
-    z-index: 10;
-    pointer-events: none;
-}
-
-.flecha-arriba {
-    top: 5px;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
+/* Scroll personalizado */
 .tabla-container::-webkit-scrollbar {
     width: 8px;
 }
-
 .tabla-container::-webkit-scrollbar-track {
     background: #f1f1f1;
     border-radius: 4px;
 }
-
 .tabla-container::-webkit-scrollbar-thumb {
     background: #c1c1c1;
     border-radius: 4px;
 }
-
 .tabla-container::-webkit-scrollbar-thumb:hover {
     background: #a8a8a8;
 }
 
-/* FOOTER - COMPACTO */
+/* Footer */
 footer {
     position: fixed;
     bottom: 0;
@@ -203,108 +148,41 @@ footer {
     text-align: center;
     font-size: 0.85em;
     color: #777;
-    padding: 8px 20px; /* Reducido padding vertical */
+    padding: 8px 20px;
     box-sizing: border-box;
-    z-index: 99;
     background-color: #f0f0f0;
     border-top: 1px solid #ddd;
-    height: auto;
-    min-height: 70px; /* Altura reducida */
+    min-height: 70px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    line-height: 1.2; /* Espaciado reducido */
+    line-height: 1.2;
 }
 
 footer a {
     color: #444;
     text-decoration: underline;
 }
-
 footer a:last-child {
     color: #FF5F5F;
     text-decoration: none;
     font-weight: bold;
 }
 
-/* Ajustes responsivos */
+/* Responsive */
 @media (max-width: 768px) {
+    .tabla-container,
+    .cronometro-container {
+        width: 90%;
+    }
     body {
         padding-bottom: 130px;
     }
-    
-    .cronometro-container,
-    .cronometro-container.fijo-arriba-botones {
-        width: 90%;
-        font-size: 1.5em;
-        padding: 12px;
-    }
-    
-    .cronometro-container.fijo-arriba-botones {
-        bottom: 240px;
-    }
-    
-    .tabla-container,
-    .tabla-container.con-registros {
-        width: 90%;
-    }
-    
     .botones-container {
         bottom: 130px;
     }
-    
-    .tabla-container.con-registros {
-        max-height: calc(100vh - 440px) !important;
-    }
-    
     footer {
-        padding: 6px 15px;
         min-height: 65px;
         font-size: 0.8em;
-        line-height: 1.1;
-    }
-}
-
-@media (max-height: 700px) {
-    body {
-        padding-bottom: 120px;
-    }
-    
-    .cronometro-container.fijo-arriba-botones {
-        bottom: 220px;
-        padding: 10px;
-        font-size: 1.6em;
-    }
-    
-    .botones-container {
-        bottom: 120px;
-    }
-    
-    .tabla-container.con-registros {
-        max-height: calc(100vh - 420px) !important;
-    }
-    
-    footer {
-        padding: 5px 12px;
-        min-height: 60px;
-        line-height: 1;
-    }
-}
-
-@media (min-height: 900px) {
-    .tabla-container.con-registros {
-        max-height: calc(100vh - 520px) !important;
-    }
-    
-    .cronometro-container.fijo-arriba-botones {
-        bottom: 270px;
-    }
-    
-    .botones-container {
-        bottom: 140px;
-    }
-    
-    footer {
-        min-height: 75px;
     }
 }
