@@ -1,310 +1,144 @@
-body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    overflow: hidden;
-    padding-bottom: 140px; /* 80px footer + 60px botones-footer */
+/* Reset básico */
+* {
+  box-sizing: border-box;
 }
 
-.titulo {
-    text-align: center;
-    margin-top: 30px;
-    font-size: 2.5em;
-    color: #333;
-    flex-shrink: 0;
-}
-
-.fecha-container {
-    text-align: center;
-    margin-top: 10px;
-    font-size: 1.5em;
-    color: #555;
-    width: 80%;
-    flex-shrink: 0;
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
 }
 
 .contenedor-principal {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    flex: 1;
-    min-height: 0;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 50px); /* deja espacio para el footer */
+  padding: 1rem;
+  gap: 1rem;
 }
 
-.tabla-container {
-    margin-top: 10px;
-    width: 80%;
-    max-height: 0;
-    overflow-y: auto;
-    position: relative;
-    flex-shrink: 0;
+#fechaContainer {
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
 }
 
-/* TABLA CON REGISTROS - ALTURA CONTROLADA */
-.tabla-container.con-registros {
-    max-height: calc(100vh - 480px) !important; /* Altura dinámica calculada */
-    flex: 1;
-    min-height: 100px;
-    margin-bottom: 20px; /* Espacio mínimo abajo */
+#tablaSeries {
+  flex: 1;
+  overflow-y: auto;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  padding: 0.5rem 0;
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
+#tablaSeries table {
+  width: 100%;
+  border-collapse: collapse;
 }
 
-td {
-    padding: 10px;
-    text-align: center;
-    font-size: 1.5em;
-    color: #444;
+#tablaSeries th,
+#tablaSeries td {
+  padding: 0.75rem;
+  text-align: center;
+  border-bottom: 1px solid #eee;
 }
 
-.boton-eliminar {
-    background-color: #ff6b6b;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    padding: 5px 10px;
-    cursor: pointer;
-    font-size: 0.9em;
-    margin-left: 10px;
+#tablaSeries th {
+  background-color: #f9f9f9;
+  color: #555;
 }
 
-.boton-eliminar:hover {
-    background-color: #ff5252;
+#controlesInferiores {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
 }
 
-.contenido-celda {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+#reloj {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #2c3e50;
 }
 
-/* BOTONES - 60px ARRIBA DEL FOOTER */
-.botones-container {
-    position: fixed;
-    bottom: 140px; /* 80px footer + 60px espacio */
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 20px;
-    z-index: 100;
-    flex-shrink: 0;
+.botones {
+  display: flex;
+  gap: 1rem;
 }
 
 .boton {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    border: none;
-    color: white;
-    font-size: 1em;
-    cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: none;
+  font-size: 1rem;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: transform 0.1s, box-shadow 0.1s;
 }
 
-.boton-registrar {
-    background-color: #4CAF50;
-}
-
-.boton-borrar {
-    background-color: #f44336;
-}
-
-.boton-registrar:hover {
-    background-color: #45a049;
-    transform: scale(1.05);
-}
-
-.boton-borrar:hover {
-    background-color: #d32f2f;
-    transform: scale(1.05);
+.boton:hover {
+  transform: scale(1.05);
 }
 
 .boton:active {
-    transform: scale(0.95);
+  transform: scale(0.95);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
-.cronometro-container {
-    margin-top: 10px;
-    font-size: 1.8em;
-    color: #333;
-    text-align: center;
-    width: 80%;
-    padding: 15px;
-    background-color: #e8f5e9;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    transition: all 0.3s ease;
-    flex-shrink: 0;
+.boton-registrar {
+  background-color: #2ecc71;
 }
 
-/* CRONÓMETRO - 40px ARRIBA DE LOS BOTONES */
-.cronometro-container.fijo-arriba-botones {
-    position: fixed;
-    bottom: 260px; /* 140px botones + 80px altura botón + 40px espacio */
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80%;
-    margin-top: 0;
-    z-index: 100;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+.boton-borrar {
+  background-color: #e74c3c;
 }
 
-.flecha-scroll {
-    position: absolute;
-    font-size: 1.5em;
-    color: #666;
-    z-index: 10;
-    pointer-events: none;
+/* Footer */
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #2c3e50;
+  color: #ecf0f1;
+  text-align: center;
+  padding: 0.4rem 0;
+  font-size: 0.85rem;
+  z-index: 10;
 }
 
-.flecha-arriba {
-    top: 5px;
-    left: 50%;
-    transform: translateX(-50%);
+.footer-link {
+  color: #3498db;
+  text-decoration: none;
 }
 
-.tabla-container::-webkit-scrollbar {
-    width: 8px;
+.footer-link:hover {
+  text-decoration: underline;
 }
 
-.tabla-container::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 4px;
+/* Scroll personalizado (WebKit) */
+#tablaSeries::-webkit-scrollbar {
+  width: 8px;
 }
 
-.tabla-container::-webkit-scrollbar-thumb {
-    background: #c1c1c1;
-    border-radius: 4px;
+#tablaSeries::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
 }
 
-.tabla-container::-webkit-scrollbar-thumb:hover {
-    background: #a8a8a8;
+#tablaSeries::-webkit-scrollbar-thumb {
+  background: #bdc3c7;
+  border-radius: 4px;
 }
 
-/* FOOTER - COMPACTO */
-footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    text-align: center;
-    font-size: 0.85em;
-    color: #777;
-    padding: 8px 20px; /* Reducido padding vertical */
-    box-sizing: border-box;
-    z-index: 99;
-    background-color: #f0f0f0;
-    border-top: 1px solid #ddd;
-    height: auto;
-    min-height: 70px; /* Altura reducida */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    line-height: 1.2; /* Espaciado reducido */
-}
-
-footer a {
-    color: #444;
-    text-decoration: underline;
-}
-
-footer a:last-child {
-    color: #FF5F5F;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-/* Ajustes responsivos */
-@media (max-width: 768px) {
-    body {
-        padding-bottom: 130px;
-    }
-    
-    .cronometro-container,
-    .cronometro-container.fijo-arriba-botones {
-        width: 90%;
-        font-size: 1.5em;
-        padding: 12px;
-    }
-    
-    .cronometro-container.fijo-arriba-botones {
-        bottom: 240px;
-    }
-    
-    .tabla-container,
-    .tabla-container.con-registros {
-        width: 90%;
-    }
-    
-    .botones-container {
-        bottom: 130px;
-    }
-    
-    .tabla-container.con-registros {
-        max-height: calc(100vh - 440px) !important;
-    }
-    
-    footer {
-        padding: 6px 15px;
-        min-height: 65px;
-        font-size: 0.8em;
-        line-height: 1.1;
-    }
-}
-
-@media (max-height: 700px) {
-    body {
-        padding-bottom: 120px;
-    }
-    
-    .cronometro-container.fijo-arriba-botones {
-        bottom: 220px;
-        padding: 10px;
-        font-size: 1.6em;
-    }
-    
-    .botones-container {
-        bottom: 120px;
-    }
-    
-    .tabla-container.con-registros {
-        max-height: calc(100vh - 420px) !important;
-    }
-    
-    footer {
-        padding: 5px 12px;
-        min-height: 60px;
-        line-height: 1;
-    }
-}
-
-@media (min-height: 900px) {
-    .tabla-container.con-registros {
-        max-height: calc(100vh - 520px) !important;
-    }
-    
-    .cronometro-container.fijo-arriba-botones {
-        bottom: 270px;
-    }
-    
-    .botones-container {
-        bottom: 140px;
-    }
-    
-    footer {
-        min-height: 75px;
-    }
+#tablaSeries::-webkit-scrollbar-thumb:hover {
+  background: #95a5a6;
 }
