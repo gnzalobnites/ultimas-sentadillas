@@ -12,27 +12,13 @@ function actualizarDisposicionElementos() {
     if (hayRegistros) {
         cronometro.classList.add('fijo-arriba-botones');
         tablaContainer.classList.add('con-registros');
-        
-        const alturaVentana = window.innerHeight;
-        const alturaFooter = 80; /* Altura del footer */
-        const alturaBotones = 80; /* Altura de los botones */
-        const alturaCronometro = 70; /* Altura del cronómetro */
-        const separacionBotonesFooter = 20; /* CAMBIADO: 20px entre botones y footer */
-        const separacionCronometroBotones = 20; /* CAMBIADO: 20px entre cronómetro y botones */
-        
-        const espacioFijo = alturaFooter + alturaBotones + alturaCronometro + 
-                           separacionBotonesFooter + separacionCronometroBotones + 60;
-        
-        const alturaDisponible = alturaVentana - espacioFijo;
-        
-        const alturaCalculada = Math.max(150, Math.min(alturaDisponible, alturaVentana * 0.55));
-        tablaContainer.style.maxHeight = alturaCalculada + 'px';
     } else {
         cronometro.classList.remove('fijo-arriba-botones');
         tablaContainer.classList.remove('con-registros');
-        tablaContainer.style.maxHeight = '0';
     }
 }
+
+// El resto del archivo permanece IGUAL
 
 window.addEventListener('resize', actualizarDisposicionElementos);
 
