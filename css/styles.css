@@ -9,7 +9,7 @@ body {
     align-items: center;
     justify-content: flex-start;
     overflow: hidden;
-    padding-bottom: 140px; /* 80px footer + 40px espacio */
+    padding-bottom: 110px; /* 80px footer + 40px espacio */
 }
 
 .titulo {
@@ -90,7 +90,7 @@ td {
 /* BOTONES - 40px ARRIBA DEL FOOTER */
 .botones-container {
     position: fixed;
-    bottom: 140px; /* 80px footer + 40px espacio */
+    bottom: 110px; /* 80px footer + 40px espacio */
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -153,7 +153,7 @@ td {
 /* CRONÓMETRO - 40px ARRIBA DE LOS BOTONES */
 .cronometro-container.fijo-arriba-botones {
     position: fixed;
-    bottom: 260px; /* 120px botones + 80px altura botón + 40px espacio */
+    bottom: 230px; /* 120px botones + 80px altura botón + 40px espacio */
     left: 50%;
     transform: translateX(-50%);
     width: 80%;
