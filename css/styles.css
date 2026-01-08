@@ -212,8 +212,8 @@ footer {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-    gap: 0; /* Sin espacio entre elementos hijos */
+    Sin: center;
+    gap: 2px; /* Sin espacio entre elementos hijos */
 }
 
 footer br {
