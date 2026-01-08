@@ -9,7 +9,7 @@ body {
     align-items: center;
     justify-content: flex-start;
     overflow: hidden;
-    padding-bottom: 100px; /* CAMBIADO: 80px footer + 20px espacio */
+    padding-bottom: 100px;
 }
 
 .titulo {
@@ -62,7 +62,7 @@ table {
 td {
     padding: 10px;
     text-align: center;
-    font-size: 1.5em;
+    font-size: 1.5em; /* TAMAÑO DE LOS REGISTROS */
     color: #444;
 }
 
@@ -87,10 +87,9 @@ td {
     justify-content: center;
 }
 
-/* BOTONES - 20px ARRIBA DEL FOOTER */
 .botones-container {
     position: fixed;
-    bottom: 100px; /* CAMBIADO: 80px footer + 20px espacio */
+    bottom: 100px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -136,9 +135,10 @@ td {
     transform: scale(0.95);
 }
 
+/* CRONÓMETRO - FUENTE MÁS GRANDE (IGUAL QUE REGISTROS) */
 .cronometro-container {
     margin-top: 10px;
-    font-size: 1.8em;
+    font-size: 2.2em; /* AUMENTADO: de 1.8em a 2.2em (más grande que 1.5em de los registros) */
     color: #333;
     text-align: center;
     width: 80%;
@@ -150,10 +150,17 @@ td {
     flex-shrink: 0;
 }
 
-/* CRONÓMETRO - 20px ARRIBA DE LOS BOTONES */
+/* Texto "Tiempo de descanso" más pequeño para contraste */
+.cronometro-container > div:last-child {
+    font-size: 0.7em; /* 70% del tamaño del cronómetro */
+    margin-top: 8px;
+    color: #666;
+    letter-spacing: 0.5px;
+}
+
 .cronometro-container.fijo-arriba-botones {
     position: fixed;
-    bottom: 200px; /* CAMBIADO: 100px botones + 80px altura + 20px espacio */
+    bottom: 200px;
     left: 50%;
     transform: translateX(-50%);
     width: 80%;
@@ -194,7 +201,6 @@ td {
     background: #a8a8a8;
 }
 
-/* FOOTER - COMPACTO */
 footer {
     position: fixed;
     bottom: 0;
@@ -202,21 +208,21 @@ footer {
     text-align: center;
     font-size: 0.85em;
     color: #777;
-    padding: 8px 20px; /* Reducido padding vertical */
+    padding: 8px 20px;
     box-sizing: border-box;
     z-index: 99;
     background-color: #f0f0f0;
     border-top: 1px solid #ddd;
     height: auto;
-    min-height: 80px; /* Altura del footer */
+    min-height: 80px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    line-height: 1.1; /* Menos espacio entre líneas */
+    line-height: 1.1;
 }
 
 footer br {
-    margin: 0; /* Sin margen extra entre líneas */
+    margin: 0;
     line-height: 1;
 }
 
@@ -240,12 +246,16 @@ footer a:last-child {
     .cronometro-container,
     .cronometro-container.fijo-arriba-botones {
         width: 90%;
-        font-size: 1.5em;
+        font-size: 1.8em; /* Ajustado proporcionalmente para móviles */
         padding: 12px;
     }
     
+    .cronometro-container > div:last-child {
+        font-size: 0.65em; /* Ajustado para móviles */
+    }
+    
     .cronometro-container.fijo-arriba-botones {
-        bottom: 180px; /* Ajustado proporcionalmente */
+        bottom: 180px;
     }
     
     .tabla-container,
@@ -254,7 +264,7 @@ footer a:last-child {
     }
     
     .botones-container {
-        bottom: 90px; /* Ajustado proporcionalmente */
+        bottom: 90px;
     }
     
     footer {
@@ -273,7 +283,11 @@ footer a:last-child {
     .cronometro-container.fijo-arriba-botones {
         bottom: 170px;
         padding: 10px;
-        font-size: 1.6em;
+        font-size: 1.7em; /* Ajustado para pantallas pequeñas */
+    }
+    
+    .cronometro-container > div:last-child {
+        font-size: 0.6em;
     }
     
     .botones-container {
@@ -298,6 +312,14 @@ footer a:last-child {
     
     .cronometro-container.fijo-arriba-botones {
         bottom: 210px;
+    }
+    
+    .cronometro-container {
+        font-size: 2.4em; /* Aún más grande en pantallas altas */
+    }
+    
+    .cronometro-container > div:last-child {
+        font-size: 0.65em;
     }
     
     .botones-container {
