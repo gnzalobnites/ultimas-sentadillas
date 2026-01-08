@@ -212,12 +212,12 @@ footer {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    line-height: 1.2;
+    line-height: 1;
 }
 
 footer br {
     margin: 0;
-    height: 2px; /* Control exacto del espacio */
+    height: 0; /* Control exacto del espacio */
 }
 
 footer a {
