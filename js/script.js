@@ -17,8 +17,8 @@ function actualizarDisposicionElementos() {
         const alturaFooter = 80; /* Altura del footer */
         const alturaBotones = 80; /* Altura de los botones */
         const alturaCronometro = 70; /* Altura del cronómetro */
-        const separacionBotonesFooter = 20; /* 40px entre botones y footer */
-        const separacionCronometroBotones = 40; /* 40px entre cronómetro y botones */
+        const separacionBotonesFooter = 20; /* CAMBIADO: 20px entre botones y footer */
+        const separacionCronometroBotones = 20; /* CAMBIADO: 20px entre cronómetro y botones */
         
         const espacioFijo = alturaFooter + alturaBotones + alturaCronometro + 
                            separacionBotonesFooter + separacionCronometroBotones + 60;
@@ -33,8 +33,6 @@ function actualizarDisposicionElementos() {
         tablaContainer.style.maxHeight = '0';
     }
 }
-
-/* El resto del archivo JavaScript permanece IGUAL */
 
 window.addEventListener('resize', actualizarDisposicionElementos);
 
