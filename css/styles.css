@@ -212,7 +212,8 @@ footer {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    line-height: 1;
+    align-items: center;
+    gap: 0; /* Sin espacio entre elementos hijos */
 }
 
 footer br {
