@@ -9,7 +9,7 @@ body {
     align-items: center;
     justify-content: flex-start;
     overflow: hidden;
-    padding-bottom: 100px;
+    padding-bottom: 140px; /* 80px footer + 60px botones-footer */
 }
 
 .titulo {
@@ -47,12 +47,12 @@ body {
     flex-shrink: 0;
 }
 
-/* TABLA CON REGISTROS - 20px ARRIBA DEL CRONÓMETRO */
+/* TABLA CON REGISTROS - ALTURA CONTROLADA */
 .tabla-container.con-registros {
-    max-height: calc(100vh - 320px) !important; /* NUEVO: cálculo dinámico */
+    max-height: calc(100vh - 480px) !important; /* Altura dinámica calculada */
     flex: 1;
-    min-height: 150px;
-    margin-bottom: 0; /* ELIMINADO: margin-bottom: 20px */
+    min-height: 100px;
+    margin-bottom: 20px; /* Espacio mínimo abajo */
 }
 
 table {
@@ -88,9 +88,10 @@ td {
     justify-content: center;
 }
 
+/* BOTONES - 60px ARRIBA DEL FOOTER */
 .botones-container {
     position: fixed;
-    bottom: 100px;
+    bottom: 140px; /* 80px footer + 60px espacio */
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -138,7 +139,7 @@ td {
 
 .cronometro-container {
     margin-top: 10px;
-    font-size: 2.2em;
+    font-size: 1.8em;
     color: #333;
     text-align: center;
     width: 80%;
@@ -150,16 +151,10 @@ td {
     flex-shrink: 0;
 }
 
-.cronometro-container > div:last-child {
-    font-size: 0.7em;
-    margin-top: 8px;
-    color: #666;
-    letter-spacing: 0.5px;
-}
-
+/* CRONÓMETRO - 40px ARRIBA DE LOS BOTONES */
 .cronometro-container.fijo-arriba-botones {
     position: fixed;
-    bottom: 200px; /* CRONÓMETRO FIJO AQUÍ */
+    bottom: 260px; /* 140px botones + 80px altura botón + 40px espacio */
     left: 50%;
     transform: translateX(-50%);
     width: 80%;
@@ -200,6 +195,7 @@ td {
     background: #a8a8a8;
 }
 
+/* FOOTER - COMPACTO */
 footer {
     position: fixed;
     bottom: 0;
@@ -207,22 +203,17 @@ footer {
     text-align: center;
     font-size: 0.85em;
     color: #777;
-    padding: 8px 20px;
+    padding: 8px 20px; /* Reducido padding vertical */
     box-sizing: border-box;
     z-index: 99;
     background-color: #f0f0f0;
     border-top: 1px solid #ddd;
     height: auto;
-    min-height: 80px;
+    min-height: 70px; /* Altura reducida */
     display: flex;
     flex-direction: column;
     justify-content: center;
-    line-height: 1.1;
-}
-
-footer br {
-    margin: 0;
-    line-height: 1;
+    line-height: 1.2; /* Espaciado reducido */
 }
 
 footer a {
@@ -239,26 +230,18 @@ footer a:last-child {
 /* Ajustes responsivos */
 @media (max-width: 768px) {
     body {
-        padding-bottom: 90px;
+        padding-bottom: 130px;
     }
     
     .cronometro-container,
     .cronometro-container.fijo-arriba-botones {
         width: 90%;
-        font-size: 1.8em;
+        font-size: 1.5em;
         padding: 12px;
     }
     
-    .cronometro-container > div:last-child {
-        font-size: 0.65em;
-    }
-    
     .cronometro-container.fijo-arriba-botones {
-        bottom: 180px; /* Ajustado para móviles */
-    }
-    
-    .tabla-container.con-registros {
-        max-height: calc(100vh - 300px) !important; /* Ajustado para móviles */
+        bottom: 240px;
     }
     
     .tabla-container,
@@ -267,65 +250,61 @@ footer a:last-child {
     }
     
     .botones-container {
-        bottom: 90px;
+        bottom: 130px;
+    }
+    
+    .tabla-container.con-registros {
+        max-height: calc(100vh - 440px) !important;
     }
     
     footer {
         padding: 6px 15px;
-        min-height: 75px;
+        min-height: 65px;
         font-size: 0.8em;
-        line-height: 1;
+        line-height: 1.1;
     }
 }
 
 @media (max-height: 700px) {
     body {
-        padding-bottom: 80px;
+        padding-bottom: 120px;
     }
     
     .cronometro-container.fijo-arriba-botones {
-        bottom: 170px;
+        bottom: 220px;
         padding: 10px;
-        font-size: 1.7em;
-    }
-    
-    .cronometro-container > div:last-child {
-        font-size: 0.6em;
-    }
-    
-    .tabla-container.con-registros {
-        max-height: calc(100vh - 290px) !important; /* Ajustado para pantallas pequeñas */
+        font-size: 1.6em;
     }
     
     .botones-container {
-        bottom: 80px;
+        bottom: 120px;
+    }
+    
+    .tabla-container.con-registros {
+        max-height: calc(100vh - 420px) !important;
     }
     
     footer {
         padding: 5px 12px;
-        min-height: 70px;
+        min-height: 60px;
         line-height: 1;
     }
 }
 
 @media (min-height: 900px) {
     .tabla-container.con-registros {
-        max-height: calc(100vh - 350px) !important; /* Ajustado para pantallas altas */
+        max-height: calc(100vh - 520px) !important;
     }
     
     .cronometro-container.fijo-arriba-botones {
-        bottom: 210px;
-    }
-    
-    .cronometro-container {
-        font-size: 2.4em;
-    }
-    
-    .cronometro-container > div:last-child {
-        font-size: 0.65em;
+        bottom: 270px;
     }
     
     .botones-container {
-        bottom: 110px;
+        bottom: 140px;
+    }
+    
+    footer {
+        min-height: 75px;
     }
 }
