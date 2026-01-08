@@ -17,7 +17,7 @@ function actualizarDisposicionElementos() {
         const alturaFooter = 80; /* Altura del footer */
         const alturaBotones = 80; /* Altura de los botones */
         const alturaCronometro = 70; /* Altura del cronómetro */
-        const separacionBotonesFooter = 40; /* 40px entre botones y footer */
+        const separacionBotonesFooter = 20; /* 40px entre botones y footer */
         const separacionCronometroBotones = 40; /* 40px entre cronómetro y botones */
         
         const espacioFijo = alturaFooter + alturaBotones + alturaCronometro + 
