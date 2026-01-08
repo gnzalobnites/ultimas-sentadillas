@@ -1,56 +1,36 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Últimas sentadillas</title>
-    <!-- Se vincula la hoja de estilos externa -->
-    <!-- CAMBIADO: Usando base URL -->
-    <link rel="stylesheet" href="https://gnzalobnites.github.io/ultimas-sentadillas/css/styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Últimas Sentadillas</title>
+  <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
-    <div class="titulo">
-        Últimas sentadillas
-    </div>
-    
-    <div id="fechaContainer" class="fecha-container"></div>
-    
-    <!-- CONTENEDOR PRINCIPAL NUEVO -->
-    <div class="contenedor-principal">
-        <div class="tabla-container" id="tablaContainer">
-            <div class="flecha-scroll flecha-arriba"></div>
-            <table id="tablaSeries">
-                <tbody>
-                    <!-- Las filas se agregarán aquí dinámicamente -->
-                </tbody>
-            </table>
-        </div>
-        
-        <div class="cronometro-container">
-            <div id="cronometro">00:00:00</div>
-            <div style="font-size: 1em; margin-top: 5px; color: #666;">Tiempo de descanso</div>
-        </div>
-    </div>
-    
-    <div class="botones-container">
-        <button class="boton boton-borrar" onclick="borrarDatos()">
-            Borrar
-        </button>
+  <div class="contenedor-principal">
+    <div id="fechaContainer"></div>
+
+    <div id="tablaSeries"></div>
+
+    <div id="controlesInferiores">
+      <div id="reloj"></div>
+      <div class="botones">
         <button class="boton boton-registrar" onclick="registrarSerie()">
-            Registrar
+          Registrar
         </button>
+        <button class="boton boton-borrar" onclick="borrarDatos()">
+          Borrar
+        </button>
+      </div>
     </div>
+  </div>
 
-<footer>
-    <div>¿Tienes sugerencias? Escríbeme a 
-        <a href="mailto:benitesgonzalogaston@gmail.com">benitesgonzalogaston@gmail.com</a>
-    </div>
-    <div>¿Te sirve esta herramienta? 
-        <a href="https://www.buymeacoffee.com/gnzbenitesh" target="_blank">☕ Invítame un café</a>
-    </div>
-</footer>
+  <footer class="footer">
+    <a href="mailto:benitesgonzalogaston@gmail.com" class="footer-link">benitesgonzalogaston@gmail.com</a>
+    &nbsp;•&nbsp;
+    <a href="https://cafecito.app/gnzalobnites" target="_blank" rel="noopener noreferrer" class="footer-link">Invitame un cafecito ☕</a>
+  </footer>
 
-    <!-- Se vincula el archivo JavaScript externo -->
-    <script src="https://gnzalobnites.github.io/ultimas-sentadillas/js/script.js"></script>
+  <script src="js/script.js"></script>
 </body>
 </html>
