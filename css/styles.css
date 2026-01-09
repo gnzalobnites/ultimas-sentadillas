@@ -1,3 +1,10 @@
+/* Constantes */
+:root {
+    --altura-footer: 70px;
+    --espacio-botones-footer: 20px;
+    --altura-botones: 80px;
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -8,7 +15,8 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    padding-bottom: 140px; /* espacio para botones + footer */
+    /* Espacio total necesario en la parte inferior */
+    padding-bottom: calc(var(--altura-footer) + var(--espacio-botones-footer) + var(--altura-botones));
 }
 
 .titulo {
@@ -42,7 +50,7 @@ body {
 }
 
 .tabla-container.con-registros {
-    max-height: 35vh; /* Límite máximo de altura */
+    max-height: 35vh;
     overflow-y: auto;
     margin-bottom: 20px;
 }
@@ -80,9 +88,10 @@ td {
     background-color: #ff5252;
 }
 
+/* BOTONES FIJOS - 20px arriba del footer */
 .botones-container {
     position: fixed;
-    bottom: 140px;
+    bottom: calc(var(--altura-footer) + var(--espacio-botones-footer)); /* 70px + 20px = 90px */
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -91,8 +100,8 @@ td {
 }
 
 .boton {
-    width: 80px;
-    height: 80px;
+    width: var(--altura-botones);
+    height: var(--altura-botones);
     border-radius: 50%;
     border: none;
     color: white;
@@ -140,7 +149,7 @@ td {
     background: #a8a8a8;
 }
 
-/* Footer */
+/* FOOTER FIJO */
 footer {
     position: fixed;
     bottom: 0;
@@ -152,11 +161,12 @@ footer {
     box-sizing: border-box;
     background-color: #f0f0f0;
     border-top: 1px solid #ddd;
-    min-height: 70px;
+    height: var(--altura-footer);
     display: flex;
     flex-direction: column;
     justify-content: center;
     line-height: 1.2;
+    z-index: 99;
 }
 
 footer a {
@@ -175,14 +185,12 @@ footer a:last-child {
     .cronometro-container {
         width: 90%;
     }
+    :root {
+        --altura-footer: 65px;
+    }
     body {
-        padding-bottom: 130px;
+        padding-bottom: calc(var(--altura-footer) + var(--espacio-botones-footer) + var(--altura-botones));
     }
     .botones-container {
-        bottom: 130px;
-    }
-    footer {
-        min-height: 65px;
-        font-size: 0.8em;
-    }
-}
+        bottom: calc(var(--altura-footer) + var(--espacio-botones-footer));
+    }50vhvh
