@@ -1,10 +1,10 @@
 /* Constantes */
 :root {
     --altura-footer: 70px;
-    --espacio-botones-footer: 30px;
-    --altura-botones: 80px;
+    --altura-botones-fijos: 80px;
+    --espacio-botones-footer: 10px;
     --altura-titulo: 120px;
-    --espacio-consistente: 20px; /* Espacio consistente entre elementos */
+    --espacio-consistente: 20px;
 }
 
 body {
@@ -16,7 +16,7 @@ body {
     display: flex;
     flex-direction: column;
     position: relative;
-    overflow-y: hidden; /* Eliminar desplazamiento vertical */
+    overflow-y: hidden;
 }
 
 .titulo {
@@ -24,8 +24,6 @@ body {
     padding-top: 30px;
     font-size: 2.5em;
     color: #333;
-    position: relative;
-    z-index: 1;
     flex-shrink: 0;
     margin-bottom: calc(var(--espacio-consistente) * 0.4);
 }
@@ -36,62 +34,52 @@ body {
     color: #555;
     width: 80%;
     max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto var(--espacio-consistente);
     display: none;
-    flex-shrink: 0;
-    margin-bottom: var(--espacio-consistente);
 }
 
-/* CONTENEDOR PRINCIPAL FLEXIBLE */
+/* CONTENEDOR PRINCIPAL */
 .contenedor-principal {
     width: 100%;
     flex: 1;
     display: flex;
     flex-direction: column;
-    position: relative;
     overflow-y: auto;
-    padding-bottom: 20px; /* Margen inferior ajustado */
-}
-
-/* Contenedores principales con ancho consistente */
-.tabla-container,
-.cronometro-container,
-.gif-container,
-.gif-y-botones-container {
-    width: 80%;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
+    padding-bottom: var(--altura-botones-fijos);
     box-sizing: border-box;
 }
 
+/* Altura dinámica */
+.contenedor-principal {
+    height: calc(100vh - var(--altura-titulo) - var(--altura-footer));
+}
+
+.contenedor-principal.con-registros {
+    height: calc(100vh - var(--altura-titulo) - var(--altura-footer) - var(--altura-botones-fijos) - var(--espacio-botones-footer));
+}
+
+/* Tabla */
 .tabla-container {
+    width: 80%;
+    max-width: 800px;
+    margin: var(--espacio-consistente) auto;
     max-height: 0;
     overflow-y: hidden;
     transition: max-height 0.3s ease;
-    margin-top: var(--espacio-consistente);
-    margin-bottom: var(--espacio-consistente);
-    flex-shrink: 0;
 }
 
 .tabla-container.con-registros {
     max-height: 35vh;
     overflow-y: auto;
     display: block;
-    flex-shrink: 0;
 }
 
-/* Mostrar fecha y cronómetro cuando haya registros */
-.contenedor-principal.con-registros .fecha-container,
-.contenedor-principal.con-registros .cronometro-container {
-    display: block;
-}
-
+/* Cronómetro */
 .cronometro-container {
     display: none;
-    margin-top: var(--espacio-consistente);
-    margin-bottom: var(--espacio-consistente);
+    width: 80%;
+    max-width: 800px;
+    margin: var(--espacio-consistente) auto;
     font-size: 1.8em;
     color: #333;
     text-align: center;
@@ -99,10 +87,9 @@ body {
     background-color: #e8f5e9;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    transition: all 0.3s ease;
     opacity: 0;
     transform: translateY(-10px);
-    flex-shrink: 0;
+    transition: all 0.3s ease;
 }
 
 .cronometro-container.mostrar {
@@ -110,6 +97,142 @@ body {
     transform: translateY(0);
 }
 
+/* GIF */
+.gif-container {
+    width: 80%;
+    max-width: 800px;
+    margin: var(--espacio-consistente) auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: #e8f5e9;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    max-height: 400px;
+    overflow: hidden;
+}
+
+/* Ocultar GIF cuando hay registros */
+.contenedor-principal.con-registros .gif-container,
+.contenedor-principal.con-registros .boton-comenzar-container {
+    display: none;
+}
+
+.gif-container img {
+    max-width: 100%;
+    max-height: 375px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    transform: scale(0.85);
+    transform-origin: center;
+}
+
+.gif-texto {
+    width: 100%;
+    text-align: center;
+    font-size: 0.95em;
+    color: #2c3e50;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 15px 20px;
+    font-weight: 600;
+    line-height: 1.6;
+    border-radius: 8px;
+    border-top: 3px solid #4CAF50;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    margin-top: 10px;
+}
+
+.gif-texto-separador {
+    display: block;
+    font-size: 0.85em;
+    font-weight: normal;
+    color: #555;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(76, 175, 80, 0.2);
+}
+
+/* BOTÓN COMENZAR */
+.boton-comenzar-container {
+    width: 80%;
+    max-width: 800px;
+    margin: var(--espacio-consistente) auto;
+    display: flex;
+    justify-content: center;
+}
+
+.boton-comenzar {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 16px 32px;
+    font-size: 1.4em;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: all 0.2s ease;
+    width: 100%;
+    max-width: 300px;
+}
+
+.boton-comenzar:hover {
+    background-color: #45a049;
+    transform: scale(1.03);
+}
+
+.boton-comenzar:active {
+    transform: scale(0.98);
+}
+
+/* BOTONES FIJOS */
+.botones-fijos {
+    position: fixed;
+    bottom: var(--altura-footer);
+    left: 50%;
+    transform: translateX(-50%);
+    display: none;
+    gap: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    backdrop-filter: blur(5px);
+    z-index: 100;
+}
+
+.contenedor-principal.con-registros ~ .botones-fijos {
+    display: flex;
+    justify-content: center;
+}
+
+.boton {
+    width: 120px;
+    height: 60px;
+    border-radius: 12px;
+    border: none;
+    color: white;
+    font-size: 1em;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+.boton-registrar { background-color: #4CAF50; }
+.boton-borrar { background-color: #f44336; }
+
+.boton-registrar:hover { background-color: #45a049; transform: scale(1.05); }
+.boton-borrar:hover { background-color: #d32f2f; transform: scale(1.05); }
+.boton:active { transform: scale(0.95); }
+
+/* Tabla estilos */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -143,112 +266,7 @@ td {
     background-color: #ff5252;
 }
 
-/* NUEVO CONTENEDOR COMBINADO */
-.gif-y-botones-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: var(--espacio-consistente);
-    margin-bottom: var(--espacio-consistente);
-}
-
-/* GIF CONTAINER */
-
-.gif-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    padding: 20px; /* Reducido de 25px a 20px (~20% menos en padding vertical total) */
-    background-color: #e8f5e9;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    transition: all 0.3s ease;
-    margin-bottom: 20px;
-    max-height: 400px; /* Límite visual general */
-    overflow: hidden;
-}
-
-/* Aplicar reducción adicional al contenedor cuando se muestra */
-.contenedor-principal:not(.con-registros) .gif-container {
-    /* Altura efectiva reducida ~20% respecto al estado original */
-    transform: scaleY(0.8);
-    transform-origin: top;
-}
-
-.gif-container img {
-    max-width: 100%;
-    max-height: 375px;
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-    transform: scale(0.70); /* Reduce el tamaño del GIF en un 30% */
-    transform-origin: center;
-}
-
-.gif-texto {
-    width: 100%;
-    text-align: center;
-    font-size: 0.95em;
-    color: #2c3e50;
-    background-color: rgba(255, 255, 255, 0.7);
-    padding: 15px 20px;
-    font-weight: 600;
-    line-height: 1.6;
-    border-radius: 8px;
-    border-top: 3px solid #4CAF50;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    margin-top: 10px;
-}
-
-.gif-texto-separador {
-    display: block;
-    font-size: 0.85em;
-    font-weight: normal;
-    color: #555;
-    margin-top: 8px;
-    padding-top: 8px;
-    border-top: 1px solid rgba(76, 175, 80, 0.2);
-}
-
-/* BOTONES DENTRO DEL MISMO CONTENEDOR */
-.botones-container {
-    display: flex;
-    gap: 20px;
-    background: rgba(255, 255, 255, 0.9);
-    padding: 10px;
-    border-radius: 15px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    backdrop-filter: blur(5px);
-    justify-content: center;
-    width: 100%;
-}
-
-.boton {
-    width: 120px;
-    height: 60px;
-    border-radius: 12px;
-    border: none;
-    color: white;
-    font-size: 1em;
-    cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    transition: all 0.2s ease;
-}
-
-.boton-registrar { background-color: #4CAF50; }
-.boton-borrar { background-color: #f44336; }
-
-.boton-registrar:hover { background-color: #45a049; transform: scale(1.05); }
-.boton-borrar:hover { background-color: #d32f2f; transform: scale(1.05); }
-.boton:active { transform: scale(0.95); }
-
-/* Scroll personalizado */
+/* Scroll personalizado (solo en tabla) */
 .tabla-container::-webkit-scrollbar {
     width: 8px;
 }
@@ -264,7 +282,7 @@ td {
     background: #a8a8a8;
 }
 
-/* FOOTER FIJO */
+/* FOOTER */
 footer {
     position: fixed;
     bottom: 0;
@@ -296,129 +314,37 @@ footer a:last-child {
 
 /* RESPONSIVE */
 @media (max-width: 768px) {
-    .tabla-container,
-    .cronometro-container,
-    .gif-container,
-    .fecha-container,
-    .gif-y-botones-container {
-        width: 90%;
-    }
-
-    .gif-container {
-        padding: 20px;
-        margin-bottom: 15px;
-    }
-
-    .gif-container img {
-        max-height: 300px;
-        margin-bottom: 15px;
-        transform: scale(0.7); /* Mantiene la reducción del 30% en dispositivos móviles */
-    }
-
-    .gif-texto {
-        font-size: 0.9em;
-        padding: 12px 15px;
-    }
-
-    .gif-texto-separador {
-        font-size: 0.8em;
-    }
-
     :root {
         --altura-footer: 65px;
-        --espacio-botones-footer: 25px;
+        --altura-botones-fijos: 70px;
         --espacio-consistente: 15px;
     }
 
-    .botones-container {
+    .botones-fijos {
         gap: 15px;
-        padding: 8px;
+        padding: 8px 15px;
+    }
+
+    .boton {
+        width: 110px;
+        height: 55px;
+        font-size: 0.95em;
+    }
+
+    .boton-comenzar {
+        font-size: 1.2em;
+        padding: 14px 24px;
     }
 
     .tabla-container.con-registros {
-        margin-bottom: var(--espacio-consistente);
         max-height: 30vh;
     }
-
-    .cronometro-container {
-        margin-bottom: var(--espacio-consistente);
-    }
-
-    .contenedor-principal {
-        padding-bottom: 20px;
-    }
 }
 
-@media (max-height: 700px) {
-    .titulo {
-        padding-top: 20px;
-        font-size: 2em;
-    }
-
-    .gif-container {
-        padding: 15px;
-        margin-bottom: 12px;
-    }
-
-    .gif-container img {
-        max-height: 270px;
-        margin-bottom: 12px;
-        transform: scale(0.7); /* Mantiene la reducción del 30% */
-    }
-
-    .gif-texto {
-        padding: 10px 12px;
-        font-size: 0.85em;
-    }
-
-    .gif-texto-separador {
-        font-size: 0.75em;
-    }
-}
-
-@media (max-height: 550px) {
-    .gif-container {
-        padding: 10px;
-        margin-bottom: 10px;
-    }
-
-    .gif-container img {
-        max-height: 210px;
-        margin-bottom: 10px;
-        transform: scale(0.7); /* Mantiene la reducción del 30% */
-    }
-
-    .gif-texto {
-        padding: 8px 10px;
-        font-size: 0.8em;
-    }
-
-    .gif-texto-separador {
-        font-size: 0.7em;
-        margin-top: 5px;
-        padding-top: 5px;
-    }
-}
-
-/* Scroll oculto en todo el cuerpo */
+/* Ocultar scroll global */
 * {
     scrollbar-width: none;
 }
 *::-webkit-scrollbar {
-    display: none;
-}
-
-/* Altura calculada para contenedor principal */
-.contenedor-principal {
-    height: calc(100vh - var(--altura-titulo) - var(--altura-footer) - 4 * var(--espacio-consistente));
-    overflow-y: auto;
-}
-
-.contenedor-principal.con-registros {
-    height: calc(100vh - var(--altura-titulo) - var(--altura-footer) - 3 * var(--espacio-consistente));
-}
-
-/* Ocultar el GIF cuando hay registros */
-.contenedor-principal.con-registros .gif-y-botones-container .gif-container {
     display: none;
     }
