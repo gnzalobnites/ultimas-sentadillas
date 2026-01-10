@@ -2,15 +2,33 @@ let numeroSerie = 0;
 let intervaloCronometro = null;
 let ultimoTimestamp = null;
 
-// Simplificada: solo muestra u oculta la tabla
 function actualizarDisposicionElementos() {
     const tablaContainer = document.querySelector('.tabla-container');
+    const contenedorPrincipal = document.querySelector('.contenedor-principal');
+    const cronometroContainer = document.querySelector('.cronometro-container');
+    const fechaContainer = document.getElementById('fechaContainer');
     const seriesGuardadas = JSON.parse(localStorage.getItem('seriesSentadillas') || '[]');
     
     if (seriesGuardadas.length > 0) {
         tablaContainer.classList.add('con-registros');
+        contenedorPrincipal.classList.add('con-registros');
+        
+        // Mostrar cronómetro y fecha con animación
+        fechaContainer.style.display = 'block';
+        cronometroContainer.style.display = 'block';
+        setTimeout(() => {
+            cronometroContainer.classList.add('mostrar');
+        }, 100);
     } else {
         tablaContainer.classList.remove('con-registros');
+        contenedorPrincipal.classList.remove('con-registros');
+        
+        // Ocultar cronómetro y fecha
+        cronometroContainer.classList.remove('mostrar');
+        setTimeout(() => {
+            cronometroContainer.style.display = 'none';
+            fechaContainer.style.display = 'none';
+        }, 300); // Esperar a que termine la animación
     }
 }
 
@@ -157,7 +175,19 @@ function borrarDatos() {
 }
 
 window.onload = function () {
+    const cronometroContainer = document.querySelector('.cronometro-container');
+    const fechaContainer = document.getElementById('fechaContainer');
     const seriesGuardadas = JSON.parse(localStorage.getItem('seriesSentadillas') || '[]');
+    
+    // Configurar estado inicial
+    if (seriesGuardadas.length === 0) {
+        cronometroContainer.style.display = 'none';
+        fechaContainer.style.display = 'none';
+    } else {
+        cronometroContainer.style.display = 'block';
+        fechaContainer.style.display = 'block';
+    }
+    
     if (seriesGuardadas.length > 0) {
         const tabla = document.getElementById('tablaSeries').getElementsByTagName('tbody')[0];
         seriesGuardadas.sort((a, b) => a.timestamp - b.timestamp);
@@ -196,6 +226,11 @@ window.onload = function () {
         const ultimaSerie = seriesGuardadas[seriesGuardadas.length - 1];
         ultimoTimestamp = ultimaSerie.timestamp;
         iniciarCronometro();
+        
+        // Añadir clase mostrar después de un breve retraso para animación
+        setTimeout(() => {
+            cronometroContainer.classList.add('mostrar');
+        }, 300);
     }
     
     actualizarDisposicionElementos();
