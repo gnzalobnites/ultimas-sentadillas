@@ -3,7 +3,8 @@
     --altura-footer: 70px;
     --espacio-botones-footer: 30px;
     --altura-botones: 80px;
-    --altura-titulo: 120px; /* Título + márgenes */
+    --altura-titulo: 120px;
+    --espacio-consistente: 20px; /* Espacio consistente entre elementos */
 }
 
 body {
@@ -15,6 +16,7 @@ body {
     display: flex;
     flex-direction: column;
     position: relative;
+    overflow-y: hidden; /* Eliminar desplazamiento vertical */
 }
 
 .titulo {
@@ -25,11 +27,11 @@ body {
     position: relative;
     z-index: 1;
     flex-shrink: 0;
+    margin-bottom: calc(var(--espacio-consistente) * 0.4);
 }
 
 .fecha-container {
     text-align: center;
-    margin-top: 10px;
     font-size: 1.5em;
     color: #555;
     width: 80%;
@@ -38,6 +40,7 @@ body {
     margin-right: auto;
     display: none;
     flex-shrink: 0;
+    margin-bottom: var(--espacio-consistente);
 }
 
 /* CONTENEDOR PRINCIPAL FLEXIBLE */
@@ -48,13 +51,14 @@ body {
     flex-direction: column;
     position: relative;
     overflow-y: auto;
-    padding-bottom: 120px; /* Espacio para los botones fijos */
+    padding-bottom: 20px; /* Margen inferior ajustado */
 }
 
 /* Contenedores principales con ancho consistente */
 .tabla-container,
 .cronometro-container,
-.gif-container {
+.gif-container,
+.gif-y-botones-container {
     width: 80%;
     max-width: 800px;
     margin-left: auto;
@@ -66,21 +70,16 @@ body {
     max-height: 0;
     overflow-y: hidden;
     transition: max-height 0.3s ease;
-    margin-top: 20px;
+    margin-top: var(--espacio-consistente);
+    margin-bottom: var(--espacio-consistente);
     flex-shrink: 0;
 }
 
 .tabla-container.con-registros {
     max-height: 35vh;
     overflow-y: auto;
-    margin-bottom: 20px;
     display: block;
     flex-shrink: 0;
-}
-
-/* Ocultar el GIF cuando haya registros */
-.contenedor-principal.con-registros .gif-container {
-    display: none;
 }
 
 /* Mostrar fecha y cronómetro cuando haya registros */
@@ -89,11 +88,10 @@ body {
     display: block;
 }
 
-/* Ocultar cronómetro inicialmente */
 .cronometro-container {
     display: none;
-    margin-top: 10px;
-    margin-bottom: 20px;
+    margin-top: var(--espacio-consistente);
+    margin-bottom: var(--espacio-consistente);
     font-size: 1.8em;
     color: #333;
     text-align: center;
@@ -107,7 +105,6 @@ body {
     flex-shrink: 0;
 }
 
-/* Animación al mostrar el cronómetro */
 .cronometro-container.mostrar {
     opacity: 1;
     transform: translateY(0);
@@ -146,26 +143,92 @@ td {
     background-color: #ff5252;
 }
 
-/* BOTONES FIJOS - MEJORADO */
+/* NUEVO CONTENEDOR COMBINADO */
+.gif-y-botones-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: var(--espacio-consistente);
+    margin-bottom: var(--espacio-consistente);
+}
+
+/* GIF CONTAINER */
+
+.gif-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 20px; /* Reducido de 25px a 20px (~20% menos en padding vertical total) */
+    background-color: #e8f5e9;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    margin-bottom: 20px;
+    max-height: 400px; /* Límite visual general */
+    overflow: hidden;
+}
+
+/* Aplicar reducción adicional al contenedor cuando se muestra */
+.contenedor-principal:not(.con-registros) .gif-container {
+    /* Altura efectiva reducida ~20% respecto al estado original */
+    transform: scaleY(0.8);
+    transform-origin: top;
+}
+
+.gif-container img {
+    max-width: 100%;
+    max-height: 375px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    transform: scale(0.70); /* Reduce el tamaño del GIF en un 30% */
+    transform-origin: center;
+}
+
+.gif-texto {
+    width: 100%;
+    text-align: center;
+    font-size: 0.95em;
+    color: #2c3e50;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 15px 20px;
+    font-weight: 600;
+    line-height: 1.6;
+    border-radius: 8px;
+    border-top: 3px solid #4CAF50;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    margin-top: 10px;
+}
+
+.gif-texto-separador {
+    display: block;
+    font-size: 0.85em;
+    font-weight: normal;
+    color: #555;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(76, 175, 80, 0.2);
+}
+
+/* BOTONES DENTRO DEL MISMO CONTENEDOR */
 .botones-container {
-    position: fixed;
-    bottom: calc(var(--altura-footer) + var(--espacio-botones-footer));
-    left: 50%;
-    transform: translateX(-50%);
     display: flex;
     gap: 20px;
-    z-index: 1000; /* Asegurar que estén por encima */
-    background: rgba(255, 255, 255, 0.9); /* Fondo semi-transparente */
+    background: rgba(255, 255, 255, 0.9);
     padding: 10px;
-    border-radius: 50px;
+    border-radius: 15px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    backdrop-filter: blur(5px); /* Efecto de desenfoque para mejor legibilidad */
+    backdrop-filter: blur(5px);
+    justify-content: center;
+    width: 100%;
 }
 
 .boton {
-    width: var(--altura-botones);
-    height: var(--altura-botones);
-    border-radius: 50%;
+    width: 120px;
+    height: 60px;
+    border-radius: 12px;
     border: none;
     color: white;
     font-size: 1em;
@@ -184,64 +247,6 @@ td {
 .boton-registrar:hover { background-color: #45a049; transform: scale(1.05); }
 .boton-borrar:hover { background-color: #d32f2f; transform: scale(1.05); }
 .boton:active { transform: scale(0.95); }
-
-/* GIF CONTAINER - CON MÁRGENES PARA EVITAR SUPERPOSICIÓN */
-.gif-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 80%;
-    max-width: 800px;
-    padding: 25px;
-    background-color: #e8f5e9;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    transition: all 0.3s ease;
-    
-    /* Márgenes para evitar superposición con botones */
-    margin: 20px auto 100px auto; /* 100px de margen inferior para los botones */
-    flex: 0 1 auto;
-    
-    /* Asegurar que no se superponga con botones fijos */
-    position: relative;
-    z-index: 1;
-}
-
-/* CAMBIO PRINCIPAL: Aumentar el tamaño del GIF en un 50% */
-.gif-container img {
-    max-width: 100%;
-    max-height: 375px; /* Aumentado de 250px a 375px (50% más) */
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-}
-
-.gif-texto {
-    width: 100%;
-    text-align: center;
-    font-size: 0.95em;
-    color: #2c3e50;
-    background-color: rgba(255, 255, 255, 0.7);
-    padding: 15px 20px;
-    font-weight: 600;
-    line-height: 1.6;
-    border-radius: 8px;
-    border-top: 3px solid #4CAF50;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    margin-top: 10px;
-}
-
-/* Separador visual dentro del texto */
-.gif-texto-separador {
-    display: block;
-    font-size: 0.85em;
-    font-weight: normal;
-    color: #555;
-    margin-top: 8px;
-    padding-top: 8px;
-    border-top: 1px solid rgba(76, 175, 80, 0.2);
-}
 
 /* Scroll personalizado */
 .tabla-container::-webkit-scrollbar {
@@ -294,141 +299,126 @@ footer a:last-child {
     .tabla-container,
     .cronometro-container,
     .gif-container,
-    .fecha-container {
+    .fecha-container,
+    .gif-y-botones-container {
         width: 90%;
     }
-    
+
     .gif-container {
-        width: 90%;
         padding: 20px;
-        margin: 15px auto 90px auto; /* Margen inferior ajustado */
-    }
-    
-    /* Ajuste para móviles: aumentar también el tamaño del GIF */
-    .gif-container img {
-        max-height: 300px; /* Aumentado de 200px a 300px (50% más) */
         margin-bottom: 15px;
     }
-    
+
+    .gif-container img {
+        max-height: 300px;
+        margin-bottom: 15px;
+        transform: scale(0.7); /* Mantiene la reducción del 30% en dispositivos móviles */
+    }
+
     .gif-texto {
         font-size: 0.9em;
         padding: 12px 15px;
     }
-    
+
     .gif-texto-separador {
         font-size: 0.8em;
     }
-    
+
     :root {
         --altura-footer: 65px;
         --espacio-botones-footer: 25px;
+        --espacio-consistente: 15px;
     }
-    
+
     .botones-container {
-        bottom: calc(var(--altura-footer) + var(--espacio-botones-footer));
         gap: 15px;
         padding: 8px;
     }
-    
+
     .tabla-container.con-registros {
-        margin-bottom: 15px;
+        margin-bottom: var(--espacio-consistente);
         max-height: 30vh;
     }
-    
+
     .cronometro-container {
-        margin-bottom: 15px;
+        margin-bottom: var(--espacio-consistente);
     }
-    
+
     .contenedor-principal {
-        padding-bottom: 110px; /* Ajuste para móviles */
+        padding-bottom: 20px;
     }
 }
 
-/* Para pantallas muy pequeñas */
 @media (max-height: 700px) {
     .titulo {
         padding-top: 20px;
         font-size: 2em;
     }
-    
+
     .gif-container {
         padding: 15px;
-        margin: 15px auto 85px auto; /* Más margen inferior en pantallas pequeñas */
-    }
-    
-    /* Ajuste para pantallas pequeñas: aumentar también el tamaño del GIF */
-    .gif-container img {
-        max-height: 270px; /* Aumentado de 180px a 270px (50% más) */
         margin-bottom: 12px;
     }
-    
+
+    .gif-container img {
+        max-height: 270px;
+        margin-bottom: 12px;
+        transform: scale(0.7); /* Mantiene la reducción del 30% */
+    }
+
     .gif-texto {
         padding: 10px 12px;
         font-size: 0.85em;
     }
-    
+
     .gif-texto-separador {
         font-size: 0.75em;
     }
-    
-    .botones-container {
-        bottom: calc(var(--altura-footer) + 20px); /* Reducir espacio en pantallas pequeñas */
-    }
-    
-    .contenedor-principal {
-        padding-bottom: 100px; /* Reducir padding en pantallas pequeñas */
-    }
 }
 
-/* Para pantallas extremadamente pequeñas */
 @media (max-height: 550px) {
     .gif-container {
-        margin: 10px auto 100px auto; /* Aún más margen inferior */
         padding: 10px;
-    }
-    
-    /* Ajuste para pantallas extremadamente pequeñas: aumentar también el tamaño del GIF */
-    .gif-container img {
-        max-height: 210px; /* Aumentado de 140px a 210px (50% más) */
         margin-bottom: 10px;
     }
-    
+
+    .gif-container img {
+        max-height: 210px;
+        margin-bottom: 10px;
+        transform: scale(0.7); /* Mantiene la reducción del 30% */
+    }
+
     .gif-texto {
         padding: 8px 10px;
         font-size: 0.8em;
     }
-    
+
     .gif-texto-separador {
         font-size: 0.7em;
         margin-top: 5px;
         padding-top: 5px;
     }
-    
-    .botones-container {
-        bottom: calc(var(--altura-footer) + 15px);
-    }
-    
-    .contenedor-principal {
-        padding-bottom: 90px;
-    }
 }
 
-/* Cuando hay registros, el GIF se oculta y mostramos otros elementos */
-.contenedor-principal.con-registros .gif-container {
+/* Scroll oculto en todo el cuerpo */
+* {
+    scrollbar-width: none;
+}
+*::-webkit-scrollbar {
     display: none;
 }
 
-.contenedor-principal.con-registros .fecha-container,
-.contenedor-principal.con-registros .cronometro-container,
-.contenedor-principal.con-registros .tabla-container {
-    position: relative;
-    top: auto;
-    left: auto;
-    transform: none;
-    margin: 0 auto 20px auto;
+/* Altura calculada para contenedor principal */
+.contenedor-principal {
+    height: calc(100vh - var(--altura-titulo) - var(--altura-footer) - 4 * var(--espacio-consistente));
+    overflow-y: auto;
 }
 
-/* Asegurar que cuando haya registros, el contenedor principal tenga menos padding */
 .contenedor-principal.con-registros {
-    padding-bottom: 80px; /* Menos padding cuando no hay GIF */
+    height: calc(100vh - var(--altura-titulo) - var(--altura-footer) - 3 * var(--espacio-consistente));
 }
+
+/* Ocultar el GIF cuando hay registros */
+.contenedor-principal.con-registros .gif-y-botones-container .gif-container {
+    display: none;
+    }
