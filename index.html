@@ -25,30 +25,33 @@
             <div style="font-size: 1em; margin-top: 5px; color: #666;">Tiempo de descanso</div>
         </div>
         
-        <div class="gif-container" id="gifContainer">
-            <img src="https://gnzalobnites.github.io/ultimas-sentadillas/media/sentadilla.gif" alt="Persona haciendo una sentadilla con técnica correcta" />
-            <div class="gif-texto">
-                 Técnica correcta de sentadilla
-                <span class="gif-texto-separador">Espalda recta • Rodillas alineadas • Pies firmes</span>
+        <!-- Contenedor combinado: GIF + Botones -->
+        <div class="gif-y-botones-container">
+            <div class="gif-container" id="gifContainer">
+                <img src="https://gnzalobnites.github.io/ultimas-sentadillas/media/sentadilla.gif" alt="Persona haciendo una sentadilla con técnica correcta" />
+                <div class="gif-texto">
+                    🎯 Técnica correcta de sentadilla
+                    <span class="gif-texto-separador">Espalda recta • Rodillas alineadas • Pies firmes</span>
+                </div>
+            </div>
+            
+            <div class="botones-container">
+                <button 
+                    class="boton boton-borrar" 
+                    aria-label="Borrar todas las series registradas"
+                    onclick="borrarDatos()"
+                >
+                    Borrar
+                </button>
+                <button 
+                    class="boton boton-registrar" 
+                    aria-label="Registrar nueva serie"
+                    onclick="registrarSerie()"
+                >
+                    Registrar
+                </button>
             </div>
         </div>
-    </div>
-    
-    <div class="botones-container">
-        <button 
-            class="boton boton-borrar" 
-            aria-label="Borrar todas las series registradas"
-            onclick="borrarDatos()"
-        >
-            Borrar
-        </button>
-        <button 
-            class="boton boton-registrar" 
-            aria-label="Registrar nueva serie"
-            onclick="registrarSerie()"
-        >
-            Registrar
-        </button>
     </div>
 
     <footer>
@@ -56,7 +59,7 @@
             <a href="mailto:benitesgonzalogaston@gmail.com">benitesgonzalogaston@gmail.com</a>
         </div>
         <div>¿Te sirve esta herramienta? 
-            <a href="https://www.buymeacoffee.com/gnzbenitesh" target="_blank"> Invítame un café</a>
+            <a href="https://www.buymeacoffee.com/gnzbenitesh " target="_blank">☕ Invítame un café</a>
         </div>
     </footer>
 
