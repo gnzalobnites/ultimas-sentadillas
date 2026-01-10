@@ -28,7 +28,7 @@ function actualizarDisposicionElementos() {
         setTimeout(() => {
             cronometroContainer.style.display = 'none';
             fechaContainer.style.display = 'none';
-        }, 300); // Esperar a que termine la animación
+        }, 300);
     }
 }
 
@@ -174,6 +174,34 @@ function borrarDatos() {
     }
 }
 
+// NUEVA FUNCIÓN: Iniciar entrenamiento
+function iniciarEntrenamiento() {
+    // Aseguramos que el estado inicial sea limpio
+    document.getElementById('tablaSeries').getElementsByTagName('tbody')[0].innerHTML = '';
+    numeroSerie = 0;
+    localStorage.removeItem('seriesSentadillas');
+    ultimoTimestamp = null;
+    document.getElementById('cronometro').textContent = '00:00:00';
+    if (intervaloCronometro) {
+        clearInterval(intervaloCronometro);
+        intervaloCronometro = null;
+    }
+
+    // Mostrar elementos del modo registro
+    document.getElementById('fechaContainer').style.display = 'block';
+    document.querySelector('.cronometro-container').style.display = 'block';
+    setTimeout(() => {
+        document.querySelector('.cronometro-container').classList.add('mostrar');
+    }, 100);
+
+    // Actualizar clases para mostrar botones fijos y ocultar GIF + botón
+    document.querySelector('.contenedor-principal').classList.add('con-registros');
+
+    // Establecer fecha actual
+    const ahora = new Date();
+    document.getElementById('fechaContainer').textContent = obtenerFechaFormateada(ahora);
+}
+
 window.onload = function () {
     const cronometroContainer = document.querySelector('.cronometro-container');
     const fechaContainer = document.getElementById('fechaContainer');
@@ -234,4 +262,10 @@ window.onload = function () {
     }
     
     actualizarDisposicionElementos();
+
+    // Event listener para el botón "¡Comenzar!"
+    const botonComenzar = document.getElementById('botonComenzar');
+    if (botonComenzar) {
+        botonComenzar.addEventListener('click', iniciarEntrenamiento);
+    }
 };
