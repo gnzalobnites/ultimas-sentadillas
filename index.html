@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Últimas sentadillas</title>
-    <link rel="stylesheet" href="https://gnzalobnites.github.io/ultimas-sentadillas/css/styles.css" />
+    <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
     <div class="titulo">Últimas sentadillas</div>
@@ -25,33 +25,37 @@
             <div style="font-size: 1em; margin-top: 5px; color: #666;">Tiempo de descanso</div>
         </div>
         
-        <!-- Contenedor combinado: GIF + Botones -->
-        <div class="gif-y-botones-container">
-            <div class="gif-container" id="gifContainer">
-                <img src="https://gnzalobnites.github.io/ultimas-sentadillas/media/sentadilla.gif" alt="Persona haciendo una sentadilla con técnica correcta" />
-                <div class="gif-texto">
-                    🎯 Técnica correcta de sentadilla
-                    <span class="gif-texto-separador">Espalda recta • Rodillas alineadas • Pies firmes</span>
-                </div>
-            </div>
-            
-            <div class="botones-container">
-                <button 
-                    class="boton boton-borrar" 
-                    aria-label="Borrar todas las series registradas"
-                    onclick="borrarDatos()"
-                >
-                    Borrar
-                </button>
-                <button 
-                    class="boton boton-registrar" 
-                    aria-label="Registrar nueva serie"
-                    onclick="registrarSerie()"
-                >
-                    Registrar
-                </button>
+        <!-- Solo el GIF (sin botones) -->
+        <div class="gif-container" id="gifContainer">
+            <img src="media/sentadilla.gif" alt="Persona haciendo una sentadilla con técnica correcta" />
+            <div class="gif-texto">
+                💪 Técnica correcta de sentadilla
+                <span class="gif-texto-separador">Espalda recta • Rodillas alineadas • Pies firmes</span>
             </div>
         </div>
+
+        <!-- Botón para comenzar entrenamiento -->
+        <div class="boton-comenzar-container" id="botonComenzarContainer">
+            <button id="botonComenzar" class="boton-comenzar">¡Comenzar!</button>
+        </div>
+    </div>
+
+    <!-- Botones fijos (solo visibles cuando hay registros) -->
+    <div class="botones-fijos" id="botonesFijos">
+        <button 
+            class="boton boton-borrar" 
+            aria-label="Borrar todas las series registradas"
+            onclick="borrarDatos()"
+        >
+            Borrar
+        </button>
+        <button 
+            class="boton boton-registrar" 
+            aria-label="Registrar nueva serie"
+            onclick="registrarSerie()"
+        >
+            Registrar
+        </button>
     </div>
 
     <footer>
@@ -59,10 +63,10 @@
             <a href="mailto:benitesgonzalogaston@gmail.com">benitesgonzalogaston@gmail.com</a>
         </div>
         <div>¿Te sirve esta herramienta? 
-            <a href="https://www.buymeacoffee.com/gnzbenitesh " target="_blank">☕ Invítame un café</a>
+            <a href="https://www.buymeacoffee.com/gnzbenitesh" target="_blank">☕ Invítame un café</a>
         </div>
     </footer>
 
-    <script src="https://gnzalobnites.github.io/ultimas-sentadillas/js/script.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>
