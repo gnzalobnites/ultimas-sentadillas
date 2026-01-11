@@ -3,44 +3,59 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Últimas sentadillas</title>
+
+    <!-- Open Graph / Redes Sociales -->
+    <meta property="og:title" content="Squat Sets Tracker" />
+    <meta property="og:description" content="Registra tus series de sentadillas (10–20 repeticiones) y lleva el control del tiempo transcurrido desde tu última serie. Totalmente flexible, sin horarios fijos." />
+    <meta property="og:image" content="https://gnzalobnites.github.io/ultimas-sentadillas/media/squat-sets-tracker-og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://gnzalobnites.github.io/ultimas-sentadillas/" />
+    <meta property="og:locale" content="es_ES" />
+
+    <title>Squat Sets Tracker</title>
     <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
-    <div class="titulo">Últimas sentadillas</div>
+    <div class="titulo">Squat Sets Tracker</div>
     
     <div id="fechaContainer" class="fecha-container"></div>
     
-    <div class="contenedor-principal">
-        <div class="tabla-container" id="tablaContainer">
-            <table id="tablaSeries">
-                <tbody>
-                    <!-- Las filas se agregarán aquí dinámicamente -->
-                </tbody>
-            </table>
-        </div>
-        
-        <div class="cronometro-container">
-            <div id="cronometro">00:00:00</div>
-            <div style="font-size: 1em; margin-top: 5px; color: #666;">Tiempo de descanso</div>
-        </div>
-        
-        <!-- Solo el GIF (sin botones) -->
-        <div class="gif-container" id="gifContainer">
-            <img src="media/sentadilla.gif" alt="Persona haciendo una sentadilla con técnica correcta" />
-            <div class="gif-texto">
-                💪 Técnica correcta de sentadilla
-                <span class="gif-texto-separador">Espalda recta • Rodillas alineadas • Pies firmes</span>
+    <div class="contenedor-principal" id="contenedorPrincipal">
+        <!-- Estado inicial: GIF + botón Comenzar -->
+        <div class="estado-inicial" id="estadoInicial">
+            <div class="gif-container">
+                <img src="https://gnzalobnites.github.io/ultimas-sentadillas/media/sentadilla.gif" alt="Persona haciendo una sentadilla con técnica correcta" />
+                <div class="gif-texto">
+                    ✔ Técnica correcta de sentadilla
+                    <span class="gif-texto-separador">Espalda recta • Rodillas alineadas • Pies firmes</span>
+                </div>
+            </div>
+
+            <div class="boton-comenzar-container">
+                <button id="botonComenzar" class="boton-comenzar">¡Comenzar!</button>
             </div>
         </div>
 
-        <!-- Botón para comenzar entrenamiento -->
-        <div class="boton-comenzar-container" id="botonComenzarContainer">
-            <button id="botonComenzar" class="boton-comenzar">¡Comenzar!</button>
+        <!-- Estado de entrenamiento -->
+        <div class="estado-entrenamiento" id="estadoEntrenamiento">
+            <div class="tabla-container" id="tablaContainer">
+                <table id="tablaSeries">
+                    <tbody>
+                        <!-- Las filas se agregarán aquí dinámicamente -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="cronometro-container">
+                <div id="cronometro">00:00:00</div>
+                <div style="font-size: 1em; margin-top: 5px; color: #666;">Tiempo de descanso</div>
+            </div>
         </div>
     </div>
 
-    <!-- Botones fijos (solo visibles cuando hay registros) -->
+    <!-- Botones fijos: SIEMPRE visibles tras "¡Comenzar!" -->
     <div class="botones-fijos" id="botonesFijos">
         <button 
             class="boton boton-borrar" 
