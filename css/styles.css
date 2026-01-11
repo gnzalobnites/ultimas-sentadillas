@@ -8,6 +8,11 @@
     --margen-gif-centrado: 40px;
 }
 
+/* Asegura que el html ocupe toda la altura */
+html {
+    height: 100%;
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -17,7 +22,7 @@ body {
     display: flex;
     flex-direction: column;
     position: relative;
-    overflow-y: hidden;
+    /* ❌ Eliminado: overflow-y: hidden; */
 }
 
 .titulo {
@@ -353,4 +358,4 @@ footer a:last-child {
 }
 *::-webkit-scrollbar {
     display: none;
-}
+        }
